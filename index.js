@@ -3,16 +3,22 @@ import cors from "cors"
 
 import db from "./database/db.js"
 import { authRouter } from "./routes/auth.js"
-import { recipeRouter } from "./routes/recipe.js"
-
-
+import { companyDetailRouter } from "./routes/companyDetail.js"
+import { companyRankRouter } from "./routes/rating.js"
+import bodyParser from "body-parser"
 
 const app = express()
 app.use(cors())
 app.use(express.json())
 
 app.use("/auth", authRouter)
-app.use("/recipes", recipeRouter)
+app.use("/detail", companyDetailRouter)
+app.use("/company", companyRankRouter)
+
+
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(express.json({ limit: '50mb' }));
+
 
 
 db()
