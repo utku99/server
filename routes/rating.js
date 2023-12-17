@@ -11,7 +11,7 @@ router.post("/rate", async (req, res) => {
         const company = await companyDetailModel.findOne({ companyId });
 
         if (!company) {
-            return res.status(404).json({ msg: "Cafe Bulunamadı" });
+            return res.json({ msg: "Cafe Bulunamadı" });
         }
 
         const existingRatingIndex = company.rank.findIndex(
@@ -19,7 +19,7 @@ router.post("/rate", async (req, res) => {
         );
 
         if (existingRatingIndex !== -1) {
-            return res.status(400).json({ msg: "Kullanıcı zaten puanladı" });
+            return res.json({ msg: "Kullanıcı zaten puanladı" });
         }
 
         const userRating = { rating, userId }
