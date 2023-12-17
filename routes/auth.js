@@ -47,15 +47,13 @@ router.post("/userlogin", async (req, res) => {
     const user = await userAuthModel.findOne({ email })
 
     if (!user) {
-        // res.status(400).json({ msg: "kullanıcı bulunamadı" })
-        res.json({ msg: "kullanıcı bulunamadı" })
+        res.status(400).json({ msg: "kullanıcı bulunamadı" })
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password)
+    const isPasswordValid = await bcrypt.compare(password, user?.password)
 
     if (!isPasswordValid) {
-        // res.status(400).json({ msg: "username or password is incorrect" })
-        res.json({ msg: "kullanıcı adı veya şifre yanlış" })
+        res.status(400).json({ msg: "kullanıcı adı veya şifre yanlış" })
     }
 
     const token = jwt.sign({ id: user._id }, "secret")
@@ -77,13 +75,13 @@ router.post("/companylogin", async (req, res) => {
     const user = await companyAuthModel.findOne({ email })
 
     if (!user) {
-        res.json({ msg: "kullanıcı bulunamadı" })
+        res.status(400).json({ msg: "kullanıcı bulunamadı" })
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password)
 
     if (!isPasswordValid) {
-        res.json({ msg: "kullanıcı adı veya şifre yanlış" })
+        res.status(400).json({ msg: "kullanıcı adı veya şifre yanlış" })
     }
 
     const token = jwt.sign({ id: user._id }, "secret")
