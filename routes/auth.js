@@ -13,14 +13,15 @@ router.post("/userregister", async (req, res) => {
     const user = await userAuthModel.findOne({ email })
 
     if (user) {
-        res.status(400).json({ msg: "user already exists" })
+        // res.status(400).json({ msg: "kullanıcı zaten var" })
+        res.json({ msg: "kullanıcı zaten var" })
     }
 
     const hashedPass = await bcrypt.hash(password, 12)
     const newUser = new userAuthModel({ name, surname, phone, email, userroleid, password: hashedPass })
     await newUser.save()
 
-    res.json({ code: 100, msg: "user registered" })
+    res.json({ code: 100, msg: "kayıt olundu" })
 })
 
 router.post("/companyregister", async (req, res) => {
@@ -28,14 +29,15 @@ router.post("/companyregister", async (req, res) => {
     const user = await companyAuthModel.findOne({ email })
 
     if (user) {
-        res.status(400).json({ msg: "company already exists" })
+        // res.status(400).json({ msg: "company already exists" })
+        res.json({ msg: "cafe zaten var" })
     }
 
     const hashedPass = await bcrypt.hash(password, 12)
     const newUser = new companyAuthModel({ name, surname, phone, email, userroleid, password: hashedPass })
     await newUser.save()
 
-    res.json({ code: 100, msg: "company registered" })
+    res.json({ code: 100, msg: "cafe kayıt edildi" })
 })
 
 
@@ -45,13 +47,15 @@ router.post("/userlogin", async (req, res) => {
     const user = await userAuthModel.findOne({ email })
 
     if (!user) {
-        res.status(400).json({ msg: "user not found" })
+        // res.status(400).json({ msg: "kullanıcı bulunamadı" })
+        res.json({ msg: "kullanıcı bulunamadı" })
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password)
 
     if (!isPasswordValid) {
-        res.status(400).json({ msg: "username or password is incorrect" })
+        // res.status(400).json({ msg: "username or password is incorrect" })
+        res.json({ msg: "kullanıcı adı veya şifre yanlış" })
     }
 
     const token = jwt.sign({ id: user._id }, "secret")
@@ -73,13 +77,13 @@ router.post("/companylogin", async (req, res) => {
     const user = await companyAuthModel.findOne({ email })
 
     if (!user) {
-        res.status(400).json({ msg: "user not found" })
+        res.json({ msg: "kullanıcı bulunamadı" })
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password)
 
     if (!isPasswordValid) {
-        res.status(400).json({ msg: "username or password is incorrect" })
+        res.json({ msg: "kullanıcı adı veya şifre yanlış" })
     }
 
     const token = jwt.sign({ id: user._id }, "secret")

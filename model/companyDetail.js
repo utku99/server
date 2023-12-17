@@ -41,22 +41,31 @@ const companyDetailSchema = new mongoose.Schema({
     }],
     rank: [
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'userRating',
-        },
+            userId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'userRating',
+            },
+            rating: {
+                type: Number,
+                default: 0
+            },
+        }
     ],
 
-})
+}, {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+});
+
 
 companyDetailSchema.virtual('averageRating').get(function () {
     if (this.rank.length === 0) {
         return 0;
     }
 
-    const totalRating = this.rank.reduce((sum, rating) => sum + rating.rating, 0);
-    return totalRating / this.rank.length;
+    const sum = this.rank.reduce((total, rankItem) => total + rankItem.rating, 0);
+    return sum / this.rank.length;
 });
-
 
 export const companyDetailModel = mongoose.model("companyDetail", companyDetailSchema)
 
