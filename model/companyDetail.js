@@ -35,10 +35,33 @@ const companyDetailSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    menu: [{
-        type: String,
-        required: true
-    }],
+    menu: [
+        {
+            companyId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "companyauth",
+                required: true,
+            },
+            menu: [{
+                id: {
+                    type: String,
+                    required: true,
+                },
+                title: {
+                    type: String,
+                    required: true,
+                },
+                content: {
+                    type: String,
+                    required: true,
+                },
+                price: {
+                    type: String,
+                    required: true,
+                },
+            }]
+        }
+    ],
     rank: [
         {
             userId: {
