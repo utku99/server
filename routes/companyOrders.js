@@ -19,9 +19,9 @@ router.post("/new", async (req, res) => {
     try {
         const detail = new companyOrdersModel(req.body)
         const response = await detail.save()
-        res.status(200).json("Siparişi Verdiniz")
+        res.status(200).json({ msg: "Siparişi verdiniz", response })
     } catch (error) {
-        res.status(400).json(error)
+        res.status(400).json({ msg: "Sipariş Verirken Hata Oluştu", error })
     }
 })
 
