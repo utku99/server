@@ -8,7 +8,8 @@ const router = express.Router()
 
 router.post("/getall", async (req, res) => {
     try {
-        const response = await companyOrdersModel.find({})
+        const { companyId } = req.body
+        const response = await companyOrdersModel.find({ companyId })
         res.status(200).json(response)
     } catch (error) {
         res.status(400).json(error)
