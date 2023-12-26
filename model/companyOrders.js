@@ -1,9 +1,6 @@
 import mongoose from "mongoose";
 
 const companyOrdersSchema = new mongoose.Schema({
-    orderId: {
-        type: mongoose.Schema.Types.ObjectId,
-    },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,

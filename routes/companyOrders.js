@@ -36,4 +36,41 @@ router.post("/getuserorder", async (req, res) => {
     }
 })
 
+router.post("/removeorder", async (req, res) => {
+    try {
+        const { orderId } = req.body;
+
+        const response = await companyOrdersModel.findByIdAndRemove(orderId);
+
+        if (!response) {
+            return res.status(404).json({ msg: 'sipariş bulunamadı' });
+        }
+
+        res.status(200).json({ msg: 'sipariş silindi' });
+    } catch (error) {
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+router.post("/completeorder", async (req, res) => {
+    try {
+        const { orderId } = req.body;
+
+        const order = await companyOrdersModel.findById(orderId);
+
+        if (!order) {
+            return res.status(404).json({ msg: 'sipariş bulunamadı' });
+        }
+
+        order.status = 'tamamlandı';
+        await order.save();
+
+        res.status(200).json({ msg: 'sipariş tamamlandı' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+
 export { router as companyOrdersRouter }
