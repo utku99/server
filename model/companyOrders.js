@@ -9,10 +9,6 @@ const companyOrdersSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
     },
-    companyId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-    },
     orders: [{
         id: {
             type: String,

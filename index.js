@@ -7,6 +7,7 @@ import { companyDetailRouter } from "./routes/companyDetail.js"
 import { companyRankRouter } from "./routes/rating.js"
 import bodyParser from "body-parser"
 import { companyOrdersRouter } from "./routes/companyOrders.js"
+import { companyCommentsRouter } from "./routes/companyComment.js"
 
 const app = express()
 app.use(cors())
@@ -16,6 +17,7 @@ app.use("/auth", authRouter)
 app.use("/detail", companyDetailRouter)
 app.use("/company", companyRankRouter)
 app.use("/order", companyOrdersRouter)
+app.use("/comment", companyCommentsRouter)
 
 
 app.use(bodyParser.json({ limit: "50mb" }));
