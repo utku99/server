@@ -26,4 +26,14 @@ router.post("/new", async (req, res) => {
     }
 })
 
+router.post("/getuserorder", async (req, res) => {
+    try {
+        const { userId } = req.body
+        const response = await companyOrdersModel.find({ userId })
+        res.status(200).json(response)
+    } catch (error) {
+        res.status(400).json(error)
+    }
+})
+
 export { router as companyOrdersRouter }
