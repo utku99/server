@@ -14,10 +14,10 @@ router.post("/new", async (req, res) => {
     }
 })
 
-router.post("/getuser", async (req, res) => {
+router.post("/getall", async (req, res) => {
     try {
-        const { userId } = req.body
-        const response = await companyCommentsModel.find({ userId })
+        const { companyId } = req.body
+        const response = await companyCommentsModel.find({ companyId })
         res.status(200).json(response)
     } catch (error) {
         res.status(400).json(error)

@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
 
 const companyCommentsSchema = new mongoose.Schema({
-    userId: {
+    companyId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
     },
-    userName: {
+    companyName: {
         type: String,
         required: true,
     },
-    companyName: {
+    userName: {
         type: String,
         required: true,
     },
