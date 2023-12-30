@@ -6,20 +6,62 @@ import { companyOrdersModel } from "../model/companyOrders.js"
 const router = express.Router()
 
 
-// router.post("/get", async (req, res) => {
-//     try {
-//         const companyId = req.body.companyId;
-//         const response = await companyDetailModel.findOne({ companyId });
+router.post("/get", async (req, res) => {
+    try {
+        const { companyId } = req.body
+        const response = await companyDetailModel.findOne({ companyId });
 
-//         if (response) {
-//             res.status(200).json(response);
-//         } else {
-//             res.status(404).json({ message: "Company detail not found" });
-//         }
-//     } catch (error) {
-//         res.status(400).json(error);
-//     }
-// });
+        if (response) {
+            res.status(200).json(response);
+        } else {
+            res.status(404).json({ message: "Company detail not found" });
+        }
+    } catch (error) {
+        res.status(400).json(error);
+    }
+});
+
+
+router.post("/set", async (req, res) => {
+    try {
+        const {
+            companyId,
+            title,
+            logo,
+            description,
+            address,
+            latitude,
+            longitude,
+            capacity,
+            menu,
+        } = req.body;
+
+        const updatedCompanyDetail = await companyDetailModel.findOneAndUpdate(
+            { companyId },
+            {
+                $set: {
+                    title,
+                    logo,
+                    description,
+                    address,
+                    latitude,
+                    longitude,
+                    capacity,
+                    menu,
+                },
+            },
+            { new: true }
+        );
+
+        if (!updatedCompanyDetail) {
+            return res.status(404).json({ message: "Cafe Bulunamadı" });
+        }
+        res.status(200).json({ message: "Düzenleme Başarılı" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
 
 router.post("/getall", async (req, res) => {
     try {
