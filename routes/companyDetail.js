@@ -1,5 +1,6 @@
 import express from "express"
 import { companyDetailModel } from "../model/companyDetail.js"
+import { companyOrdersModel } from "../model/companyOrders.js"
 
 
 const router = express.Router()
@@ -34,6 +35,19 @@ router.post("/new", async (req, res) => {
         const detail = new companyDetailModel(req.body)
         const response = await detail.save()
         res.status(200).json(response)
+    } catch (error) {
+        res.status(400).json(error)
+    }
+})
+
+router.post("/emptycount", async (req, res) => {
+    try {
+        const { companyId } = req.body
+        const { capacity } = await companyDetailModel.findOne({ companyId });
+        const respo = await companyOrdersModel.find({ companyId });
+        let avaibleorders = respo.filter(item => item.status !== "iptal edildi")
+        const awaibletablecount = Number(capacity) - avaibleorders?.length
+        res.status(200).json(awaibletablecount)
     } catch (error) {
         res.status(400).json(error)
     }
