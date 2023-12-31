@@ -13,6 +13,9 @@ const companyOrdersSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
     },
+    tableId: {
+        type: String,
+    },
     orders: [{
         id: {
             type: String,
@@ -70,8 +73,33 @@ companyOrdersSchema.pre('save', async function (next) {
     next();
 });
 
+// companyOrdersSchema.pre('save', async function (next) {
+//     const companyDetail = await mongoose.model("companyDetail").findOne({ companyId: this.companyId });
+//     const companyOrders = await companyOrdersModel.find({ companyId: this.companyId, status: "hazırlanıyor" });
+
+//     if (!companyDetail) {
+//         console.log("CompanyDetail not found for companyId:", this.companyId);
+//         return next();
+//     }
+
+//     const capacityy = companyDetail.capacity;
+
+//     const availableTableCount = Number(capacityy) - companyOrders?.length;
+
+//     if (availableTableCount > 0) {
+//         this.tableId = availableTableCount.toString();
+//         await this.save()
+//     } else {
+//         console.log("No available tables for order:");
+//     }
+
+//     next();
+// });
+
 
 
 
 export const companyOrdersModel = mongoose.model(" companyorders", companyOrdersSchema)
+
+
 

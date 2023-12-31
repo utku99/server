@@ -95,6 +95,17 @@ router.post("/emptycount", async (req, res) => {
     }
 })
 
+router.post("/companyname", async (req, res) => {
+    try {
+        const { companyId } = req.body
+        const { title } = await companyDetailModel.findOne({ companyId });
+
+        res.status(200).json(title)
+    } catch (error) {
+        res.status(400).json(error)
+    }
+})
+
 export { router as companyDetailRouter }
 
 
