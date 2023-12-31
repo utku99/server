@@ -29,8 +29,8 @@ const companyOrdersSchema = new mongoose.Schema({
     }],
     status: {
         type: String,
-        enum: ["hazırlanıyor", "tamamlandı", "iptal edildi"],
-        default: "hazırlanıyor",
+        enum: ["bekliyor", "hazırlanıyor", "tamamlandı", "iptal edildi"],
+        default: "bekliyor",
     },
     createdAt: {
         type: Date,

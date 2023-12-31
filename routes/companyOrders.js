@@ -52,9 +52,9 @@ router.post("/removeorder", async (req, res) => {
     }
 });
 
-router.post("/completeorder", async (req, res) => {
+router.post("/changeorderstate", async (req, res) => {
     try {
-        const { orderId } = req.body;
+        const { orderId, status } = req.body;
 
         const order = await companyOrdersModel.findById(orderId);
 
@@ -62,10 +62,10 @@ router.post("/completeorder", async (req, res) => {
             return res.status(404).json({ msg: 'sipariş bulunamadı' });
         }
 
-        order.status = 'tamamlandı';
+        order.status = status;
         await order.save();
 
-        res.status(200).json({ msg: 'sipariş tamamlandı' });
+        res.status(200).json({ msg: 'sipariş durumu değiştirildi' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });

@@ -54,12 +54,12 @@ router.post("/set", async (req, res) => {
         );
 
         if (!updatedCompanyDetail) {
-            return res.status(404).json({ message: "Cafe Bulunamadı" });
+            return res.status(404).json({ msg: "Cafe Bulunamadı" });
         }
-        res.status(200).json({ message: "Düzenleme Başarılı" });
+        res.status(200).json({ msg: "Düzenleme Başarılı" });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Internal server error" });
+        res.status(500).json({ msg: "Internal server error" });
     }
 });
 
