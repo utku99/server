@@ -87,7 +87,7 @@ router.post("/updateorder", async (req, res) => {
         updatedOrder.push(neworder)
         order.orders = updatedOrder
         order.status = "güncellendi";
-        order.remainingTime = 30;
+        order.remainingTime = 25;
         await order.save();
 
         res.status(200).json({ msg: 'sipariş değiştirildi' });
