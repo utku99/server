@@ -83,7 +83,7 @@ router.post("/updateorder", async (req, res) => {
             return res.status(404).json({ msg: 'sipariş bulunamadı' });
         }
 
-        let updatedOrder = order.orders.filter(item => item.id != 2)
+        let updatedOrder = order.orders.filter(item => item.id != neworder.id)
         updatedOrder.push(neworder)
         order.orders = updatedOrder
         order.status = "güncellendi";
