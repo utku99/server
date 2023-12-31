@@ -5,6 +5,10 @@ const companyOrdersSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
     },
+    fullName: {
+        type: String,
+        required: true,
+    },
     companyId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,

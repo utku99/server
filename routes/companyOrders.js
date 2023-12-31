@@ -73,23 +73,23 @@ router.post("/changeorderstate", async (req, res) => {
     }
 });
 
-router.post("/gettablenumber", async (req, res) => {
-    try {
-        const { orderId, companyId } = req.body;
+// router.post("/gettablenumber", async (req, res) => {
+//     try {
+//         const { orderId, companyId } = req.body;
 
-        const order = await companyOrdersModel.findById(orderId);
-        const { capacity } = await companyDetailModel.findOne({ companyId });
-        const respo = await companyOrdersModel.find({ companyId });
-        let avaibleorders = respo.filter(item => item.status == "hazırlanıyor")
-        const awaibletablecount = Number(capacity) - avaibleorders?.length
+//         const order = await companyOrdersModel.findById(orderId);
+//         const { capacity } = await companyDetailModel.findOne({ companyId });
+//         const respo = await companyOrdersModel.find({ companyId });
+//         let avaibleorders = respo.filter(item => item.status == "hazırlanıyor")
+//         const awaibletablecount = Number(capacity) - avaibleorders?.length
 
 
 
-        res.status(200).json(awaibletablecount);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
-});
+//         res.status(200).json(awaibletablecount);
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: 'Internal server error' });
+//     }
+// });
 
 export { router as companyOrdersRouter }
