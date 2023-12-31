@@ -87,7 +87,7 @@ router.post("/emptycount", async (req, res) => {
         const { companyId } = req.body
         const { capacity } = await companyDetailModel.findOne({ companyId });
         const respo = await companyOrdersModel.find({ companyId });
-        let avaibleorders = respo.filter(item => item.status !== "iptal edildi")
+        let avaibleorders = respo.filter(item => item.status == "hazırlanıyor")
         const awaibletablecount = Number(capacity) - avaibleorders?.length
         res.status(200).json(awaibletablecount)
     } catch (error) {

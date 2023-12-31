@@ -43,33 +43,29 @@ const companyOrdersSchema = new mongoose.Schema({
 
 })
 
-companyOrdersSchema.pre('save', function (next) {
-    const order = this;
+// Cache devre dışı bırakma kodu
+companyOrdersSchema.set('toObject', { getters: true });
+companyOrdersSchema.set('toJSON', { getters: true });
 
-    if (order.remainingTime <= 0) {
-        order.status = 'iptal edildi';
-        return next();
+companyOrdersSchema.pre('save', async function (next) {
+    if (this.isModified('status') && this.status === 'hazırlanıyor') {
+        const countdownFunction = async () => {
+            const countdown = setInterval(async () => {
+                this.remainingTime -= 1;
+                if (this.remainingTime <= 0) {
+                    this.status = "iptal edildi";
+                    clearInterval(countdown);
+                }
+                await this.save();
+            }, 1000);
+        };
+
+        countdownFunction();
     }
-
-    const countdownInterval = setInterval(() => {
-        order.remainingTime -= 1;
-
-        if (order.remainingTime <= 0) {
-            order.status = 'iptal edildi';
-            clearInterval(countdownInterval);
-        }
-
-        order.save()
-            .then(() => {
-            })
-            .catch((error) => {
-                clearInterval(countdownInterval);
-                return next(error);
-            });
-    }, 60000);
 
     next();
 });
+
 
 
 
