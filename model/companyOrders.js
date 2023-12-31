@@ -56,6 +56,7 @@ companyOrdersSchema.set('toJSON', { getters: true });
 
 companyOrdersSchema.pre('save', async function (next) {
     if (this.isModified('status') && this.status === 'hazırlanıyor') {
+        this.remainingTime = 30;
         const countdownFunction = async () => {
             const countdown = setInterval(async () => {
                 this.remainingTime -= 1;
@@ -68,8 +69,8 @@ companyOrdersSchema.pre('save', async function (next) {
         };
 
         countdownFunction();
-    }
 
+    }
     next();
 });
 
