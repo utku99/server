@@ -75,7 +75,7 @@ router.post("/changeorderstate", async (req, res) => {
 
 router.post("/updateorder", async (req, res) => {
     try {
-        const { orderId, neworder } = req.body;
+        const { orderId, removedId, neworder } = req.body;
 
         const order = await companyOrdersModel.findById(orderId);
 
@@ -83,10 +83,11 @@ router.post("/updateorder", async (req, res) => {
             return res.status(404).json({ msg: 'sipariş bulunamadı' });
         }
 
-        let updatedOrder = order.orders.filter(item => item.id != neworder.id)
+        let updatedOrder = order.orders.filter(item => item.id != removedId)
         updatedOrder.push(neworder)
         order.orders = updatedOrder
         order.status = "güncellendi";
+        order.remainingTime = 30;
         await order.save();
 
         res.status(200).json({ msg: 'sipariş değiştirildi' });
